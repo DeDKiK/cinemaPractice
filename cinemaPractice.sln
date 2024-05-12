@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
+<<<<<<< Updated upstream
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "api\api.csproj", "{838C798A-8D86-4E4D-B0FA-C23D3C7D4F27}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "api\api.csproj", "{2BAF3A5B-96F2-401C-A6DB-2638184241E9}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +15,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+<<<<<<< Updated upstream
 		{838C798A-8D86-4E4D-B0FA-C23D3C7D4F27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{838C798A-8D86-4E4D-B0FA-C23D3C7D4F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{838C798A-8D86-4E4D-B0FA-C23D3C7D4F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{838C798A-8D86-4E4D-B0FA-C23D3C7D4F27}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{2BAF3A5B-96F2-401C-A6DB-2638184241E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAF3A5B-96F2-401C-A6DB-2638184241E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAF3A5B-96F2-401C-A6DB-2638184241E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAF3A5B-96F2-401C-A6DB-2638184241E9}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+<<<<<<< Updated upstream
 		SolutionGuid = {B9F9646F-2006-4AA3-BD55-A5B3DE002BC1}
+=======
+		SolutionGuid = {A81B82CE-0FF3-458C-8B66-821702A731A9}
+>>>>>>> Stashed changes
 	EndGlobalSection
 EndGlobal
