@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace api.Models
 {
     public class Session
     {
+         [Key]
      public int Session_Id { get; set; }
     public int? Id_film { get; set; }
     public DateTime Session_date { get; set; }

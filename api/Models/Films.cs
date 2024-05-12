@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace api.Models
 {
     public class Films
     {
-        public int Id_films { get; set; }
+         [Key]
+    public int Id_films { get; set; }
     public string Name { get; set; }= string.Empty;
     public string Genre { get; set; }= string.Empty;
     public string Producer { get; set; }= string.Empty;
