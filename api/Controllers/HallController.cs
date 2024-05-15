@@ -8,15 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace api.Controllers
 {
-    [Route("api/films")]
+    [Route("api/hall")]
     [ApiController]
-    public class FilmsController : ControllerBase
+    public class HallController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public FilmsController(ApplicationDBContext context)
+        public HallController(ApplicationDBContext context)
         {
             _context = context;
         }
@@ -24,24 +23,23 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var films = _context.Films.ToList();
+            var hall = _context.Hall.ToList();
 
-            return Ok(films);
+            return Ok(hall);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var films = _context.Films.Find(id);
+            var hall = _context.Hall.Find(id);
 
             if(stock == null)
             {
                 return NotFound();
             }
 
-            return Ok(films);
+            return Ok(hall);
         }
 
-        
     }
 }
