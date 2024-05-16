@@ -34,7 +34,7 @@ namespace api.Controllers
         {
             var films = _context.Films.Find(id);
 
-            if(stock == null)
+            if(films == null)
             {
                 return NotFound();
             }
@@ -42,6 +42,8 @@ namespace api.Controllers
             return Ok(films);
         }
 
+        [HttpPost]
         
+        public IActionResult Create([FromBody] CreateFilmRequest filmDTO)
     }
 }
