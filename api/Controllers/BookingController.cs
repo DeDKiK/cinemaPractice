@@ -10,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
-    [Route("api/users")]
+    [Route("api/booking")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class BookingController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public UsersController(ApplicationDBContext context)
+        public BookingController(ApplicationDBContext context)
         {
             _context = context;
         }
@@ -23,23 +23,23 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _context.User.ToList();
+            var booking = _context.Booking.ToList();
 
-            return Ok(users);
+            return Ok(booking);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
-        {
-            var users = _context.User.Find(id);
 
-            if(users == null)
+        public IActionResult GetById([FromRouter] int id)
+        {
+            var booking = _context.Booking.Find(id)
+
+            if(booking == null)
             {
                 return NotFound();
             }
 
-            return Ok(users);
+            return Ok(booking);
         }
-
     }
 }

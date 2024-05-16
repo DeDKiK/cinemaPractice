@@ -10,36 +10,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
-    [Route("api/users")]
+    [Route("api/session")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class SessionController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public UsersController(ApplicationDBContext context)
+
+        public SessionController(ApplicationDBContext context)
         {
             _context = context;
         }
-
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _context.User.ToList();
+            var session = _context.Session.ToList();
 
-            return Ok(users);
+            return Ok(session);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
-        {
-            var users = _context.User.Find(id);
 
-            if(users == null)
+        public IActionResult GetById([FromRouter] int id)
+        {
+            var session = _context.Session.Find(id)
+
+            if(session == null)
             {
                 return NotFound();
             }
 
-            return Ok(users);
+            return Ok(session);
         }
-
     }
 }
