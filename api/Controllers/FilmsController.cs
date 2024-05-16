@@ -24,7 +24,9 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var films = _context.Films.ToList();
+            var films = _context.Films.ToList()
+           
+           .Select(s => s.ToFilmsDto());
 
             return Ok(films);
         }
@@ -39,7 +41,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return Ok(films);
+            return Ok(films.ToFilmsDto());
         }
 
         
