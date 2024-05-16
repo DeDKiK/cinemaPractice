@@ -36,7 +36,7 @@ namespace api.Controllers
         {
             var films = _context.Films.Find(id);
 
-            if(stock == null)
+            if(films == null)
             {
                 return NotFound();
             }

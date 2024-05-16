@@ -34,7 +34,7 @@ namespace api.Controllers
         {
             var hall = _context.Hall.Find(id);
 
-            if(stock == null)
+            if(hall == null)
             {
                 return NotFound();
             }

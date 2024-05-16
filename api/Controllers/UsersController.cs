@@ -34,7 +34,7 @@ namespace api.Controllers
         {
             var users = _context.Users.Find(id);
 
-            if(stock == null)
+            if(users == null)
             {
                 return NotFound();
             }
