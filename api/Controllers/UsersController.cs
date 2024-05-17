@@ -23,7 +23,8 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _context.User.ToList();
+            var users = _context.Users.ToList()
+            .Select(s => s.ToUsersDto());
 
             return Ok(users);
         }
@@ -38,7 +39,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return Ok(users);
+            return Ok(users.ToUsersDto());
         }
 
     }

@@ -23,7 +23,8 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var hall = _context.Hall.ToList();
+            var hall = _context.Hall.ToList()
+            .Select(s => s.ToHallDto());
 
             return Ok(hall);
         }
@@ -38,7 +39,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return Ok(hall);
+            return Ok(hall.ToHallDto());
         }
 
     }
