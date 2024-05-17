@@ -44,6 +44,8 @@ namespace api.Controllers
             return Ok(films.ToFilmsDto());
         }
 
+        [HttpPost]
         
+        public IActionResult Create([FromBody] CreateFilmRequest filmDTO)
     }
 }
