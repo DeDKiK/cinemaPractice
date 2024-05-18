@@ -22,5 +22,16 @@ namespace api.Mappers
     
             };
         }
+
+        public static Users ToUsersFromCreateDto(this CreateUsersRequestDto UsersDto)
+        {
+            return new Users
+            {
+                Nickname = UsersDto.Nickname,
+                Email = UsersDto.Email,
+                Pass = UsersDto.Pass,
+                Regestration_date = UsersDto.Regestration_date
+            };
+        }
     }
 }

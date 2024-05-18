@@ -19,5 +19,14 @@ namespace api.Mappers
             
          };
        }
+
+       public static Hall ToHallFromCreateDto(this CreateHallRequestDto HallDto)
+       {
+          return new Hall
+          {
+            Row_amount = HallDto.Row_amount,
+            Amount_seats_in_a_row = HallDto.Amount_seats_in_a_row
+          };
+       }
     }
 }

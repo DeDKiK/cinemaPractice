@@ -21,5 +21,17 @@ namespace api.Mappers
                 Hall_Id = bookingModel.Hall_Id
             };
         }
+
+        public static Booking ToBookingFromCreateDto(this CreateBookingRequestDto BookingDto)
+        {
+            return new Booking
+            {
+                User_Id = BookingDto.User_Id,
+                Session_Id = BookingDto.Session_Id,
+                Ticket_amount = BookingDto.Ticket_amount,
+                Booking_date = BookingDto.Booking_date,
+                Hall_Id = BookingDto.Hall_Id
+            };
+        }
     }
 }

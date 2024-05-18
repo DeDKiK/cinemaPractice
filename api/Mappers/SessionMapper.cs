@@ -24,5 +24,18 @@ namespace api.Mappers
             };
        
         }
+
+        public static Session ToSessionFromCreateDto(this CreateSessionRequestDto SessionDto)
+        {
+            return new Session
+            {
+                Id_film = SessionDto.Id_film,
+                Session_date = SessionDto.Session_date,
+                Session_time = SessionDto.Session_time,
+                Hall = SessionDto.Hall,
+                Price = SessionDto.Price,
+                Amount_of_empty_seats = SessionDto.Amount_of_empty_seats
+            };
+        }
     }
 }

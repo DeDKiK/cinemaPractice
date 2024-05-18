@@ -44,5 +44,16 @@ namespace api.Controllers
             return Ok(hall.ToHallDto());
         }
 
+        [HttpPost]
+
+        public IActionResult Create([FromBody] CreateHallRequestDto HallDTO)
+        {
+            var hallModel = HallDTO.ToHallFromCreateDto();
+            _context.Hall.Add(hallModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetById), new { id = hallModel.Hall_Id}, hallModel.ToHallDto());
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Models;
 using api.Mappers;
+using api.Dtos.Session;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,17 @@ namespace api.Controllers
             }
 
             return Ok(session.ToSessionDto());
+        }
+
+        [HttpPost]
+
+        public IActionResult Create([FromBody] CreateSessionRequestDto SessionDTO)
+        {
+            var sessionModel = SessionDTO.ToSessionFromCreateDto();
+            _context.Session.Add(sessionModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetById), new { id = sessionModel.Session_Id}, sessionModel.ToSessionDto());
         }
     }
 }

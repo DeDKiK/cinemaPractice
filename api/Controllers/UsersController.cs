@@ -44,5 +44,16 @@ namespace api.Controllers
             return Ok(users.ToUsersDto());
         }
 
+        [HttpPost]
+
+        public IActionResult Create([FromBody] CreateUsersRequestDto UsersDTO)
+        {
+            var usersModel = UsersDTO.ToUsersFromCreateDto();
+            _context.User.Add(usersModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetById), new { id = usersModel.User_Id}, usersModel.ToUsersDto());
+        }
+
     }
 }
