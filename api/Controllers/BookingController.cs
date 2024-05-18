@@ -78,6 +78,19 @@ namespace api.Controllers
 
         }
 
+    [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var BookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
+    if (BookingModel == null)
+    {
+        return NotFound();
+    }
+    _context.Booking.Remove(BookingModel);
+    _context.SaveChanges();
+
+    return NoContent();
+}
 
     }
 }

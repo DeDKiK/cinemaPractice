@@ -79,5 +79,19 @@ namespace api.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var UsersModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+    if (UsersModel == null)
+    {
+        return NotFound();
+    }
+    _context.User.Remove(UsersModel);
+    _context.SaveChanges();
+
+    return NoContent();
+}
+   
     }
 }

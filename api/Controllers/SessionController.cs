@@ -82,7 +82,19 @@ namespace api.Controllers
 
         }
     
-    
+        [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var SessionModel = _context.Session.FirstOrDefault(x => x.Session_Id == id);
+    if (SessionModel == null)
+    {
+        return NotFound();
+    }
+    _context.Session.Remove(SessionModel);
+    _context.SaveChanges();
+
+    return NoContent();
+}
     
     }
 }
