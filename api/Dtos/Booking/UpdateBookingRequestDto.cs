@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace api.Dtos.Booking
 {
-    public class CreateBookingRequestDto
+    public class UpdateBookingRequestDto
     {
-      
-           public int? User_Id { get; set; }
+         public int? User_Id { get; set; }
         public int? Session_Id { get; set; }
         public int Ticket_amount { get; set; }
         public DateTime Booking_date { get; set; }= DateTime.Now;

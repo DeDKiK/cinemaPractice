@@ -54,6 +54,30 @@ namespace api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = bookingModel.Booking_Id}, bookingModel.ToBookingDto());
         }
+        
+         [HttpPut]
+        [Route("{id}")]     
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateBookingRequestDto updateDto)
+        { 
+            var bookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
+            
+            
+            if(bookingModel == null)
+                {
+
+                    return NotFound();
+                }
+
+            
+            bookingModel.Ticket_amount  = updateDto.Ticket_amount;
+            bookingModel.Booking_date = updateDto.Booking_date;
+            _context.SaveChanges();
+        
+
+            return Ok(bookingModel.ToBookingDto());
+
+        }
+
 
     }
 }
