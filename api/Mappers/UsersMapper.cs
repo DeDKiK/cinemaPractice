@@ -8,15 +8,15 @@ namespace api.Mappers
     public static class UsersMapper
     {
         public static UsersDto ToUsersDto (this Users usersModel)
-        
-        return new UsersDto
         {
+            return new UsersDto
+            {
             User_Id = usersModel.User_Id,
             Nickname = usersModel.Nickname,
             Email = usersModel.Email,
             Pass = usersModel.Pass,
-            Regestration_date = usersModel.Regestration_date,
-    
-        };
+            Regestration_date = usersModel.Regestration_date
+            };
+        }
     }
 }
