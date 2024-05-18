@@ -54,6 +54,18 @@ namespace api.Controllers
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = bookingModel.Booking_Id}, bookingModel.ToBookingDto());
         }
+    [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var BookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
+    if (BookingModel == null)
+    {
+        return NotFound();
+    }
+    _context.Booking.Remove(BookingModel);
+    _context.SaveChanges();
 
+    return NoContent();
+}
     }
 }

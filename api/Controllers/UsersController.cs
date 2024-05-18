@@ -54,6 +54,18 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = usersModel.User_Id}, usersModel.ToUsersDto());
         }
+            [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var UserModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+    if (UserModel == null)
+    {
+        return NotFound();
+    }
+    _context.User.Remove(UserModel);
+    _context.SaveChanges();
 
+    return NoContent();
+}
     }
 }

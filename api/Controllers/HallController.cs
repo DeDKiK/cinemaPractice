@@ -54,6 +54,18 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = hallModel.Hall_Id}, hallModel.ToHallDto());
         }
+    [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var HallModel = _context.Hall.FirstOrDefault(x => x.Hall_Id == id);
+    if (HallModel == null)
+    {
+        return NotFound();
+    }
+    _context.Hall.Remove(HallModel);
+    _context.SaveChanges();
 
+    return NoContent();
+}
     }
 }
