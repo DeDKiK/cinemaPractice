@@ -84,7 +84,21 @@ namespace api.Controllers
             return Ok(filmsModel.ToFilmsDto());
 
         }
+    [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var FilmsModel = _context.Films.FirstOrDefault(x => x.Id_films == id);
+    if (FilmsModel == null)
+    {
+        return NotFound();
+    }
+    _context.Films.Remove(FilmsModel);
+    _context.SaveChanges();
 
+    return NoContent();
+}
 
     }
 }
+
+  
