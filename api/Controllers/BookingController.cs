@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Models;
 using api.Mappers;
+using api.Dtos.Booking;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -43,5 +44,16 @@ namespace api.Controllers
 
             return Ok(booking.ToBookingDto());
         }
+
+        [HttpPost]
+
+        public IActionResult Create([FromBody] CreateBookingRequestDto BookingDTO)
+        {
+            var bookingModel = BookingDTO.ToBookingFromCreateDto();
+            _context.Booking.Add(bookingModel);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetById), new { id = bookingModel.Booking_Id}, bookingModel.ToBookingDto());
+        }
+
     }
 }
