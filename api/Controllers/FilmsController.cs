@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace api.Controllers
 {
     [Route("api/films")]
@@ -27,8 +26,7 @@ namespace api.Controllers
         public IActionResult GetAll()
         {
             var films = _context.Films.ToList()
-           
-           .Select(s => s.ToFilmsDto());
+                .Select(s => s.ToFilmsDto());
 
             return Ok(films);
         }
@@ -38,7 +36,7 @@ namespace api.Controllers
         {
             var films = _context.Films.Find(id);
 
-            if(films == null)
+            if (films == null)
             {
                 return NotFound();
             }
@@ -47,27 +45,28 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        
         public IActionResult Create([FromBody] CreateFilmsRequestDto FilmsDTO)
         {
             var filmsModel = FilmsDTO.ToFilmsFromCreateDto();
             _context.Films.Add(filmsModel);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
+            return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films }, filmsModel.ToFilmsDto());
         }
-        [HttpDelete]
-        [Route("{id}")]
-        public iActionResults Delete([FromRoute]int id)
-        var stockModel = _context.Stocks.FirstOrDefault(x=> x.Id ==id);
-        if(stockModel == null)
-        {
-            returnNotFound();
-        }
-       _context.Stocks.Remove(stockModel);
 
-       _context.SaveChanges();
+[HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    var FilmsModel = _context.Films.FirstOrDefault(x => x.Id_films == id);
+    if (FilmsModel == null)
+    {
+        return NotFound();
+    }
+    _context.Films.Remove(FilmsModel);
+    _context.SaveChanges();
 
-       return NoContent(); 
+    return NoContent();
+}
+
     }
 }
