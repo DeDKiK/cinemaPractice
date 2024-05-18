@@ -57,5 +57,34 @@ namespace api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
         }
 
+        [HttpPut]
+        [Route("{id}")]     
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateFilmsRequestDto updateDto)
+        { 
+            var filmsModel = _context.Films.FirstOrDefault(x => x.Id_films == id);
+            
+            
+            if(filmsModel == null)
+                {
+
+                    return NotFound();
+                }
+
+            filmsModel.Name = updateDto.Name;
+            filmsModel.Genre = updateDto.Genre;
+            filmsModel.Producer = updateDto.Producer;
+            filmsModel.Description = updateDto.Description;
+            filmsModel.Duration = updateDto.Duration;
+            filmsModel.Release_Date = updateDto.Release_Date;
+            filmsModel.Country = updateDto.Country;
+            filmsModel.Age_rating = updateDto.Age_rating;
+
+            _context.SaveChanges();
+
+            return Ok(filmsModel.ToFilmsDto());
+
+        }
+
+
     }
 }
