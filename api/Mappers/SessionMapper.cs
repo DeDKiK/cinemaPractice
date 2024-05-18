@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Models;
+using api.Dtos.Session;
 
 namespace api.Mappers
 {
     public static class SessionMapper
     {
-        pablic static SessionDto ToSessionDto (this Session sessionModel)
+        public static SessionDto ToSessionDto (this Session sessionModel)
         {
             return new SessionDto
             {
