@@ -23,7 +23,8 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var booking = _context.Booking.ToList();
+            var booking = _context.Booking.ToList()
+            .Select(s => s.ToBookingDto());
 
             return Ok(booking);
         }
@@ -39,7 +40,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return Ok(booking);
+            return Ok(booking.ToBookingDto());
         }
     }
 }

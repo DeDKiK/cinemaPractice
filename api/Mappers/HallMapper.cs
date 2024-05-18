@@ -13,7 +13,7 @@ namespace api.Mappers
          {
                 Hall_Id = hallModel.Hall_Id,
                 Row_amount = hallModel.Row_amount,
-                Amount_seats_in_a_row = hallModel.Amount_seats_in_a_row,
+                Amount_seats_in_a_row = hallModel.Amount_seats_in_a_row
             
          };
        }
