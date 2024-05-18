@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Models;
+using api.Dtos.Films;
+using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +48,14 @@ namespace api.Controllers
 
         [HttpPost]
         
-        public IActionResult Create([FromBody] CreateFilmRequest filmDTO)
+        public IActionResult Create([FromBody] CreateFilmsRequestDto FilmsDTO)
+        {
+            var filmsModel = FilmsDTO.ToFilmsFromCreateDto();
+            _context.Films.Add(filmsModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
+        }
+
     }
 }

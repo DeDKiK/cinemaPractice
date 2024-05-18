@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Models;
+using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +32,9 @@ namespace api.Controllers
 
         [HttpGet("{id}")]
 
-        public IActionResult GetById([FromRouter] int id)
+        public IActionResult GetById([FromRoute] int id)
         {
-            var booking = _context.Booking.Find(id)
+            var booking = _context.Booking.Find(id);
 
             if(booking == null)
             {

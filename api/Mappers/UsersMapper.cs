@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Models;
+using api.Dtos.Users;
 
 namespace api.Mappers
 {
@@ -9,13 +11,15 @@ namespace api.Mappers
     {
         public static UsersDto ToUsersDto (this Users usersModel)
         {
-            return new UsersDto
+        
+         return new UsersDto
             {
-            User_Id = usersModel.User_Id,
-            Nickname = usersModel.Nickname,
-            Email = usersModel.Email,
-            Pass = usersModel.Pass,
-            Regestration_date = usersModel.Regestration_date
+                User_Id = usersModel.User_Id,
+                Nickname = usersModel.Nickname,
+                Email = usersModel.Email,
+                Pass = usersModel.Pass,
+                Regestration_date = usersModel.Regestration_date
+    
             };
         }
     }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Models;
+using api.Dtos.Hall;
+using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +26,7 @@ namespace api.Controllers
         public IActionResult GetAll()
         {
             var hall = _context.Hall.ToList()
-            .Select(s => s.ToHallDto());
+                .Select(s => s.ToHallDto());
 
             return Ok(hall);
         }
