@@ -5,8 +5,19 @@ using System.Threading.Tasks;
 
 namespace api.Mappers
 {
-    public class BookingMapper
+    public static class BookingMapper
     {
-        
+        public static BookingDto ToBookingDto (this Booking bookingModel)
+        {
+            return new BookingDto
+            {
+                Booking_Id = bookingModel.Booking_Id,
+                User_Id = bookingModel.User_Id,
+                Session_Id = bookingModel.Session_Id,
+                Ticket_amount = bookingModel.Ticket_amount,
+                Booking_date = bookingModel.Booking_date,
+                Hall_Id = bookingModel.Hall_Id
+            };
+        }
     }
 }

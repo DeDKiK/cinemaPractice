@@ -23,7 +23,8 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var session = _context.Session.ToList();
+            var session = _context.Session.ToList()
+            .Select(s => s.ToSessionDto());
 
             return Ok(session);
         }
@@ -39,7 +40,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return Ok(session);
+            return Ok(session.ToSessionDto());
         }
     }
 }
