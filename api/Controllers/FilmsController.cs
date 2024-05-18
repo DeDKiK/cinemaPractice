@@ -56,6 +56,18 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
         }
+        [HttpDelete]
+        [Route("{id}")]
+        public iActionResults Delete([FromRoute]int id)
+        var stockModel = _context.Stocks.FirstOrDefault(x=> x.Id ==id);
+        if(stockModel == null)
+        {
+            returnNotFound();
+        }
+       _context.Stocks.Remove(stockModel);
 
+       _context.SaveChanges();
+
+       return NoContent(); 
     }
 }
