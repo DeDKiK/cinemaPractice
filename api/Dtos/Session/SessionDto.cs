@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Films;
+using api.Dtos.Booking;
 
 namespace api.Dtos.Session
 {
     public class SessionDto
     {
-        [Key]
      public int Session_Id { get; set; }
     public int? Id_film { get; set; }
     public DateTime Session_date { get; set; }
@@ -16,8 +17,8 @@ namespace api.Dtos.Session
     public decimal Price { get; set; }
     public int Amount_of_empty_seats { get; set; }
 
-        public Films? Films { get; set; }
+        public api.Dtos.Films.FilmsDto? Films { get; set; }
 
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
+        public List<api.Dtos.Booking.BookingDto> Bookings { get; set; } = new List<api.Dtos.Booking.BookingDto>();
     }
 }

@@ -7,6 +7,6 @@ namespace api.Mappers
 {
     public static class SessionMapper
     {
-        pablic static SessionDto ToSessionDto (this )
+       
     }
 }

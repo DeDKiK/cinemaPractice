@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Session;
+using api.Dtos.Hall;
+using api.Dtos.Users;
+
 
 namespace api.Dtos.Booking
 {
     public class BookingDto
     {
-        [Key]
+
     public int Booking_Id { get; set; }
     public int? User_Id { get; set; }
     public int? Session_Id { get; set; }
@@ -18,9 +22,9 @@ namespace api.Dtos.Booking
 
 
 
-    public Session? Session { get; set; }
-    public Hall? Hall { get; set; }
-    public Users? Users { get; set; }
+    public api.Dtos.Session.SessionDto? Session { get; set; }
+    public api.Dtos.Hall.HallDto? Hall { get; set; }
+    public api.Dtos.Users.UsersDto? Users { get; set; }
 
     }
 }

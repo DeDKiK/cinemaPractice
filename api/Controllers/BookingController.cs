@@ -30,9 +30,9 @@ namespace api.Controllers
 
         [HttpGet("{id}")]
 
-        public IActionResult GetById([FromRouter] int id)
+        public IActionResult GetById([FromRoute] int id)
         {
-            var booking = _context.Booking.Find(id)
+            var booking = _context.Booking.Find(id);
 
             if(booking == null)
             {

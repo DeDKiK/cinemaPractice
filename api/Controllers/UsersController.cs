@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Models;
+using api.Dtos.Users;
+using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +25,8 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _context.Users.ToList()
-            .Select(s => s.ToUsersDto());
+            var users = _context.User.ToList()
+                .Select(s => s.ToUsersDto());
 
             return Ok(users);
         }
