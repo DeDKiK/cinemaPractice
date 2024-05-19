@@ -54,6 +54,33 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = hallModel.Hall_Id}, hallModel.ToHallDto());
         }
+
+
+
+        [HttpPut]
+        [Route("{id}")]     
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateHallRequestDto updateDto)
+        { 
+            var hallModel = _context.Hall.FirstOrDefault(x => x.Hall_Id == id);
+            
+            
+            if(hallModel == null)
+                {
+
+                    return NotFound();
+                }
+
+            
+            hallModel.Row_amount = updateDto.Row_amount;
+            hallModel.Amount_seats_in_a_row = updateDto.Amount_seats_in_a_row;
+            _context.SaveChanges();
+        
+
+            return Ok(hallModel.ToHallDto());
+
+        }
+
+
     [HttpDelete("{id}")]
 public IActionResult Delete([FromRoute] int id)
 {

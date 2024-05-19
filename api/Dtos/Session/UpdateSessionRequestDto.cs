@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace api.Dtos.Session
 {
-    public class CreateSessionRequestDto
+    public class UpdateSessionRequestDto
     {
-    
+      
     public int? Id_film { get; set; }
     public DateTime Session_date { get; set; }
     public TimeSpan Session_time { get; set; }

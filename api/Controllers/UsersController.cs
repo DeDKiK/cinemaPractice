@@ -54,18 +54,44 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = usersModel.User_Id}, usersModel.ToUsersDto());
         }
-            [HttpDelete("{id}")]
+
+        [HttpPut]
+        [Route("{id}")]     
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateUsersRequestDto updateDto)
+        { 
+            var usersModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+            
+            
+            if(usersModel == null)
+                {
+
+                    return NotFound();
+                }
+
+            usersModel.Nickname = updateDto.Nickname;
+            usersModel.Email = updateDto.Email;
+            usersModel.Pass = updateDto.Pass;
+            usersModel.Regestration_date = updateDto.Regestration_date;
+            _context.SaveChanges();
+        
+
+            return Ok(usersModel.ToUsersDto());
+
+        }
+
+        [HttpDelete("{id}")]
 public IActionResult Delete([FromRoute] int id)
 {
-    var UserModel = _context.User.FirstOrDefault(x => x.User_Id == id);
-    if (UserModel == null)
+    var UsersModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+    if (UsersModel == null)
     {
         return NotFound();
     }
-    _context.User.Remove(UserModel);
+    _context.User.Remove(UsersModel);
     _context.SaveChanges();
 
     return NoContent();
 }
+   
     }
 }

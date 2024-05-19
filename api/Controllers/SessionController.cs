@@ -55,7 +55,34 @@ namespace api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = sessionModel.Session_Id}, sessionModel.ToSessionDto());
         }
-            [HttpDelete("{id}")]
+         
+         
+         [HttpPut]
+        [Route("{id}")]     
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateSessionRequestDto updateDto)
+        { 
+            var sessionModel = _context.Session.FirstOrDefault(x => x.Session_Id == id);
+            
+            
+            if(sessionModel == null)
+                {
+
+                    return NotFound();
+                }
+
+            sessionModel.Session_date = updateDto.Session_date;
+            sessionModel.Session_time = updateDto.Session_time;
+            sessionModel.Hall = updateDto.Hall;
+            sessionModel.Price = updateDto.Price;
+            sessionModel.Amount_of_empty_seats = updateDto.Amount_of_empty_seats;
+            _context.SaveChanges();
+        
+
+            return Ok(sessionModel.ToSessionDto());
+
+        }
+    
+        [HttpDelete("{id}")]
 public IActionResult Delete([FromRoute] int id)
 {
     var SessionModel = _context.Session.FirstOrDefault(x => x.Session_Id == id);
@@ -68,5 +95,6 @@ public IActionResult Delete([FromRoute] int id)
 
     return NoContent();
 }
+    
     }
 }
