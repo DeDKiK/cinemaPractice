@@ -9,6 +9,7 @@ using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Interfaces;
 
 namespace api.Controllers
 {
@@ -17,15 +18,17 @@ namespace api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public UsersController(ApplicationDBContext context)
+        private readonly IUsersRepository _useRepo;
+        public UsersController(ApplicationDBContext context, IUsersRepository useRepo)
         {
+            _useRepo = useRepo;
             _context = context;
         }
 
         [HttpGet]
         public async Task <IActionResult> GetAll()
         {
-            var users = await _context.User.ToListAsync();
+            var users = await _useRepo.GetAllAsync();
             var UsersDto = users.Select(s => s.ToUsersDto());
 
             return Ok(users);
