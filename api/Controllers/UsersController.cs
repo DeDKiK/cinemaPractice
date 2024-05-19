@@ -37,7 +37,7 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var users = await _context.User.FindAsync(id);
+            var users = await _useRepo.GetByIdAsync(id);
 
             if(users == null)
             {
@@ -52,8 +52,7 @@ namespace api.Controllers
         public async Task <IActionResult> Create([FromBody] CreateUsersRequestDto UsersDTO)
         {
             var usersModel = UsersDTO.ToUsersFromCreateDto();
-            await _context.User.AddAsync(usersModel);
-            await _context.SaveChangesAsync();
+            await _useRepo.CreateAsync(usersModel);
 
             return CreatedAtAction(nameof(GetById), new { id = usersModel.User_Id}, usersModel.ToUsersDto());
         }
@@ -62,8 +61,7 @@ namespace api.Controllers
         [Route("{id}")]     
         public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateUsersRequestDto updateDto)
         { 
-            var usersModel = await _context.User.FirstOrDefaultAsync(x => x.User_Id == id);
-            
+            var usersModel = await _useRepo.UpdateAsync(id, updateDto);
             
             if(usersModel == null)
                 {
@@ -71,12 +69,7 @@ namespace api.Controllers
                     return NotFound();
                 }
 
-            usersModel.Nickname = updateDto.Nickname;
-            usersModel.Email = updateDto.Email;
-            usersModel.Pass = updateDto.Pass;
-            usersModel.Regestration_date = updateDto.Regestration_date;
-            await _context.SaveChangesAsync();
-        
+
 
             return Ok(usersModel.ToUsersDto());
 
@@ -85,13 +78,11 @@ namespace api.Controllers
         [HttpDelete("{id}")]
 public async Task <IActionResult> Delete([FromRoute] int id)
 {
-    var UsersModel = await _context.User.FirstOrDefaultAsync(x => x.User_Id == id);
+    var UsersModel = await _useRepo.DeleteAsync(id);
     if (UsersModel == null)
     {
         return NotFound();
     }
-    _context.User.Remove(UsersModel);
-    await _context.SaveChangesAsync();
 
     return NoContent();
 }

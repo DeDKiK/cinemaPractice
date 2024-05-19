@@ -39,7 +39,7 @@ namespace api.Controllers
 
         public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var booking = await _context.Booking.FindAsync(id);
+            var booking = await _bookRepo.GetByIdAsync(id);
 
             if(booking == null)
             {
@@ -54,8 +54,7 @@ namespace api.Controllers
         public async Task <IActionResult> Create([FromBody] CreateBookingRequestDto BookingDTO)
         {
             var bookingModel = BookingDTO.ToBookingFromCreateDto();
-            await _context.Booking.AddAsync(bookingModel);
-            await _context.SaveChangesAsync();
+            await _bookRepo.CreateAsync(bookingModel);
             return CreatedAtAction(nameof(GetById), new { id = bookingModel.Booking_Id}, bookingModel.ToBookingDto());
         }
         
@@ -63,20 +62,13 @@ namespace api.Controllers
         [Route("{id}")]     
         public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookingRequestDto updateDto)
         { 
-            var bookingModel = await _context.Booking.FirstOrDefaultAsync(x => x.Booking_Id == id);
-            
+            var bookingModel = await _bookRepo.UpdateAsync(id, updateDto);
             
             if(bookingModel == null)
                 {
 
                     return NotFound();
                 }
-
-            
-            bookingModel.Ticket_amount  = updateDto.Ticket_amount;
-            bookingModel.Booking_date = updateDto.Booking_date;
-            await _context.SaveChangesAsync();
-        
 
             return Ok(bookingModel.ToBookingDto());
 
@@ -85,14 +77,12 @@ namespace api.Controllers
         [HttpDelete("{id}")]
         public async Task <IActionResult> Delete([FromRoute] int id)
         {
-            var BookingModel = await _context.Booking.FirstOrDefaultAsync(x => x.Booking_Id == id);
+            var BookingModel = await _bookRepo.DeleteAsync(id);
             if (BookingModel == null)
             {
                 return NotFound();
             }
-            _context.Booking.Remove(BookingModel);
-            
-            await _context.SaveChangesAsync();
+
 
             return NoContent();
         }
