@@ -9,6 +9,8 @@ using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Windows.Markup;
+using System.Runtime.CompilerServices;
 
 
 namespace api.Controllers
@@ -24,19 +26,19 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task <IActionResult> GetAll()
         {
-            var films = _context.Films.ToList()
+            var films = await _context.Films.ToListAsync();
            
-           .Select(s => s.ToFilmsDto());
+           var FilmsDTO = films.Select(s => s.ToFilmsDto());
 
             return Ok(films);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var films = _context.Films.Find(id);
+            var films = await _context.Films.FindAsync(id);
 
             if(films == null)
             {
@@ -48,20 +50,20 @@ namespace api.Controllers
 
         [HttpPost]
         
-        public IActionResult Create([FromBody] CreateFilmsRequestDto FilmsDTO)
+        public async Task <IActionResult> Create([FromBody] CreateFilmsRequestDto FilmsDTO)
         {
             var filmsModel = FilmsDTO.ToFilmsFromCreateDto();
-            _context.Films.Add(filmsModel);
-            _context.SaveChanges();
+            await _context.Films.AddAsync(filmsModel);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
         }
 
         [HttpPut]
         [Route("{id}")]     
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateFilmsRequestDto updateDto)
+        public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateFilmsRequestDto updateDto)
         { 
-            var filmsModel = _context.Films.FirstOrDefault(x => x.Id_films == id);
+            var filmsModel = await _context.Films.FirstOrDefaultAsync(x => x.Id_films == id);
             
             
             if(filmsModel == null)
@@ -79,21 +81,22 @@ namespace api.Controllers
             filmsModel.Country = updateDto.Country;
             filmsModel.Age_rating = updateDto.Age_rating;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(filmsModel.ToFilmsDto());
 
         }
     [HttpDelete("{id}")]
-public IActionResult Delete([FromRoute] int id)
+public async Task <IActionResult> Delete([FromRoute] int id)
 {
-    var FilmsModel = _context.Films.FirstOrDefault(x => x.Id_films == id);
+    var FilmsModel = await _context.Films.FirstOrDefaultAsync(x => x.Id_films == id);
     if (FilmsModel == null)
     {
         return NotFound();
     }
     _context.Films.Remove(FilmsModel);
-    _context.SaveChanges();
+    
+    await _context.SaveChangesAsync();
 
     return NoContent();
 }

@@ -23,19 +23,19 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var booking = _context.Booking.ToList()
-            .Select(s => s.ToBookingDto());
+            var booking = await _context.Booking.ToListAsync();
+            var BookingDto = booking.Select(s => s.ToBookingDto());
 
             return Ok(booking);
         }
 
         [HttpGet("{id}")]
 
-        public IActionResult GetById([FromRoute] int id)
+        public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var booking = _context.Booking.Find(id);
+            var booking = await _context.Booking.FindAsync(id);
 
             if(booking == null)
             {
@@ -47,19 +47,19 @@ namespace api.Controllers
 
         [HttpPost]
 
-        public IActionResult Create([FromBody] CreateBookingRequestDto BookingDTO)
+        public async Task <IActionResult> Create([FromBody] CreateBookingRequestDto BookingDTO)
         {
             var bookingModel = BookingDTO.ToBookingFromCreateDto();
-            _context.Booking.Add(bookingModel);
-            _context.SaveChanges();
+            await _context.Booking.AddAsync(bookingModel);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = bookingModel.Booking_Id}, bookingModel.ToBookingDto());
         }
         
-         [HttpPut]
+        [HttpPut]
         [Route("{id}")]     
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateBookingRequestDto updateDto)
+        public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateBookingRequestDto updateDto)
         { 
-            var bookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
+            var bookingModel = await _context.Booking.FirstOrDefaultAsync(x => x.Booking_Id == id);
             
             
             if(bookingModel == null)
@@ -71,26 +71,27 @@ namespace api.Controllers
             
             bookingModel.Ticket_amount  = updateDto.Ticket_amount;
             bookingModel.Booking_date = updateDto.Booking_date;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         
 
             return Ok(bookingModel.ToBookingDto());
 
         }
 
-    [HttpDelete("{id}")]
-public IActionResult Delete([FromRoute] int id)
-{
-    var BookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
-    if (BookingModel == null)
-    {
-        return NotFound();
-    }
-    _context.Booking.Remove(BookingModel);
-    _context.SaveChanges();
+        [HttpDelete("{id}")]
+        public async Task <IActionResult> Delete([FromRoute] int id)
+        {
+            var BookingModel = await _context.Booking.FirstOrDefaultAsync(x => x.Booking_Id == id);
+            if (BookingModel == null)
+            {
+                return NotFound();
+            }
+            _context.Booking.Remove(BookingModel);
+            
+            await _context.SaveChangesAsync();
 
-    return NoContent();
-}
+            return NoContent();
+        }
 
     }
 }
