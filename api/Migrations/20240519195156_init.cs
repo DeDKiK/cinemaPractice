@@ -69,11 +69,12 @@ namespace api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_film = table.Column<int>(type: "int", nullable: true),
                     Session_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Session_time = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Session_time = table.Column<int>(type: "int", nullable: false),
                     Hall = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Amount_of_empty_seats = table.Column<int>(type: "int", nullable: false),
-                    FilmsId_films = table.Column<int>(type: "int", nullable: true)
+                    FilmsId_films = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +99,8 @@ namespace api.Migrations
                     Hall_Id = table.Column<int>(type: "int", nullable: true),
                     Session_Id1 = table.Column<int>(type: "int", nullable: true),
                     Hall_Id1 = table.Column<int>(type: "int", nullable: true),
-                    UsersUser_Id = table.Column<int>(type: "int", nullable: true)
+                    UsersUser_Id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

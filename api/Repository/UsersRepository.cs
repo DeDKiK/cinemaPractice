@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Users;
 using api.Interfaces;
-using api.Migrations;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 

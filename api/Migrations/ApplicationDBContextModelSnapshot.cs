@@ -17,7 +17,7 @@ namespace api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -37,6 +37,9 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("Hall_Id1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int?>("Session_Id")
@@ -143,6 +146,9 @@ namespace api.Migrations
                     b.Property<int>("Hall")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Id_film")
                         .HasColumnType("int");
 
@@ -152,8 +158,8 @@ namespace api.Migrations
                     b.Property<DateTime>("Session_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("Session_time")
-                        .HasColumnType("time");
+                    b.Property<int>("Session_time")
+                        .HasColumnType("int");
 
                     b.HasKey("Session_Id");
 
