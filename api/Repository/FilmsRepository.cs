@@ -7,6 +7,7 @@ using api.Dtos.Films;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace api.Repository
 {

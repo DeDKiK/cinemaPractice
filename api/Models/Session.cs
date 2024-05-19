@@ -22,5 +22,6 @@ namespace api.Models
         public Films? Films { get; set; }
 
         public List<Booking> Bookings { get; set; } = new List<Booking>();
+        public int Id { get; internal set; }
     }
 }

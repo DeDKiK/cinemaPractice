@@ -39,7 +39,7 @@ namespace api.Controllers
 
         public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var session = await _context.Session.FindAsync(id);
+            var session = await _sessRepo.GetByIdAsync(id);
 
             if(session == null)
             {
@@ -54,8 +54,7 @@ namespace api.Controllers
         public async Task <IActionResult> Create([FromBody] CreateSessionRequestDto SessionDTO)
         {
             var sessionModel = SessionDTO.ToSessionFromCreateDto();
-            await _context.Session.AddAsync(sessionModel);
-            await _context.SaveChangesAsync();
+            await _sessRepo.CreateAsync(sessionModel);
 
             return CreatedAtAction(nameof(GetById), new { id = sessionModel.Session_Id}, sessionModel.ToSessionDto());
         }
@@ -65,7 +64,7 @@ namespace api.Controllers
         [Route("{id}")]     
         public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateSessionRequestDto updateDto)
         { 
-            var sessionModel = await _context.Session.FirstOrDefaultAsync(x => x.Session_Id == id);
+            var sessionModel = await _sessRepo.UpdateAsync(id, updateDto);
             
             
             if(sessionModel == null)
@@ -74,12 +73,7 @@ namespace api.Controllers
                     return NotFound();
                 }
 
-            sessionModel.Session_date = updateDto.Session_date;
-            sessionModel.Session_time = updateDto.Session_time;
-            sessionModel.Hall = updateDto.Hall;
-            sessionModel.Price = updateDto.Price;
-            sessionModel.Amount_of_empty_seats = updateDto.Amount_of_empty_seats;
-            await _context.SaveChangesAsync();
+
         
 
             return Ok(sessionModel.ToSessionDto());

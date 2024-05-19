@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Windows.Markup;
 using System.Runtime.CompilerServices;
 using api.Interfaces;
-
+using Microsoft.Extensions.DependencyInjection;
 
 namespace api.Controllers
 {

@@ -24,8 +24,6 @@ namespace api.Models
     public Session? Session { get; set; }
     public Hall? Hall { get; set; }
     public Users? Users { get; set; }
-
-
-
+        public int Id { get; internal set; }
     }
 }
