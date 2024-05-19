@@ -9,6 +9,7 @@ using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace api.Controllers
 {
@@ -23,18 +24,18 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task <IActionResult> GetAll()
         {
-            var hall = _context.Hall.ToList()
-                .Select(s => s.ToHallDto());
+            var hall = await _context.Hall.ToListAsync();
+            var HallDto = hall.Select(s => s.ToHallDto());
 
             return Ok(hall);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var hall = _context.Hall.Find(id);
+            var hall = await _context.Hall.FindAsync(id);
 
             if(hall == null)
             {
@@ -46,11 +47,11 @@ namespace api.Controllers
 
         [HttpPost]
 
-        public IActionResult Create([FromBody] CreateHallRequestDto HallDTO)
+        public async Task <IActionResult> Create([FromBody] CreateHallRequestDto HallDTO)
         {
             var hallModel = HallDTO.ToHallFromCreateDto();
-            _context.Hall.Add(hallModel);
-            _context.SaveChanges();
+            await _context.Hall.AddAsync(hallModel);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = hallModel.Hall_Id}, hallModel.ToHallDto());
         }
@@ -59,9 +60,9 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id}")]     
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateHallRequestDto updateDto)
+        public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateHallRequestDto updateDto)
         { 
-            var hallModel = _context.Hall.FirstOrDefault(x => x.Hall_Id == id);
+            var hallModel = await _context.Hall.FirstOrDefaultAsync(x => x.Hall_Id == id);
             
             
             if(hallModel == null)
@@ -73,7 +74,7 @@ namespace api.Controllers
             
             hallModel.Row_amount = updateDto.Row_amount;
             hallModel.Amount_seats_in_a_row = updateDto.Amount_seats_in_a_row;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         
 
             return Ok(hallModel.ToHallDto());
@@ -82,15 +83,16 @@ namespace api.Controllers
 
 
     [HttpDelete("{id}")]
-public IActionResult Delete([FromRoute] int id)
+public async Task <IActionResult> Delete([FromRoute] int id)
 {
-    var HallModel = _context.Hall.FirstOrDefault(x => x.Hall_Id == id);
+    var HallModel = await _context.Hall.FirstOrDefaultAsync(x => x.Hall_Id == id);
     if (HallModel == null)
     {
         return NotFound();
     }
     _context.Hall.Remove(HallModel);
-    _context.SaveChanges();
+
+    await _context.SaveChangesAsync();
 
     return NoContent();
 }

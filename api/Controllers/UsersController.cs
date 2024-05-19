@@ -23,18 +23,18 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task <IActionResult> GetAll()
         {
-            var users = _context.User.ToList()
-                .Select(s => s.ToUsersDto());
+            var users = await _context.User.ToListAsync();
+            var UsersDto = users.Select(s => s.ToUsersDto());
 
             return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var users = _context.User.Find(id);
+            var users = await _context.User.FindAsync(id);
 
             if(users == null)
             {
@@ -46,20 +46,20 @@ namespace api.Controllers
 
         [HttpPost]
 
-        public IActionResult Create([FromBody] CreateUsersRequestDto UsersDTO)
+        public async Task <IActionResult> Create([FromBody] CreateUsersRequestDto UsersDTO)
         {
             var usersModel = UsersDTO.ToUsersFromCreateDto();
-            _context.User.Add(usersModel);
-            _context.SaveChanges();
+            await _context.User.AddAsync(usersModel);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = usersModel.User_Id}, usersModel.ToUsersDto());
         }
 
         [HttpPut]
         [Route("{id}")]     
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateUsersRequestDto updateDto)
+        public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateUsersRequestDto updateDto)
         { 
-            var usersModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+            var usersModel = await _context.User.FirstOrDefaultAsync(x => x.User_Id == id);
             
             
             if(usersModel == null)
@@ -72,7 +72,7 @@ namespace api.Controllers
             usersModel.Email = updateDto.Email;
             usersModel.Pass = updateDto.Pass;
             usersModel.Regestration_date = updateDto.Regestration_date;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         
 
             return Ok(usersModel.ToUsersDto());
@@ -80,15 +80,15 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
-public IActionResult Delete([FromRoute] int id)
+public async Task <IActionResult> Delete([FromRoute] int id)
 {
-    var UsersModel = _context.User.FirstOrDefault(x => x.User_Id == id);
+    var UsersModel = await _context.User.FirstOrDefaultAsync(x => x.User_Id == id);
     if (UsersModel == null)
     {
         return NotFound();
     }
     _context.User.Remove(UsersModel);
-    _context.SaveChanges();
+    await _context.SaveChangesAsync();
 
     return NoContent();
 }
