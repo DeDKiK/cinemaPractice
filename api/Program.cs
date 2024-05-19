@@ -22,6 +22,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>{
 });
 
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IFilmsRepository, FilmsRepository>();
+builder.Services.AddScoped<IHallRepository, HallRepository>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 

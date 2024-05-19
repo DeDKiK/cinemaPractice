@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hwFUhNEFNZ/Ir3N6CkPjVHBSpm6ZQnOAxI07WukiPLxY6bt5XSkplhrMoaUCP8YIAmTEZo9Pr0so2qbsf8o2kA==",
+  "dgSpecHash": "MWO2wUiQ4/pbGhsanCUZFQxjhVIvZ2w3qt/+5/WlDmqDr0hyKzpmhGxv4MRwPGjn0neIEov2eG1xO68dXs4vfw==",
   "success": true,
-  "projectFilePath": "c:\\Users\\deres\\OneDrive\\Рабочий стол\\New folder\\cinemaPractice\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\deres\\OneDrive\\Рабочий стол\\New folder\\cinemaPractice\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\deres\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\deres\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
