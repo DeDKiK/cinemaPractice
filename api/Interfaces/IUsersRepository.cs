@@ -6,8 +6,8 @@ using api.Models;
 
 namespace api.Interfaces
 {
-    public interface IBookingRepository
+    public interface IUsersRepository
     {
-        Task<List<Booking>> GetAllAsync();
+        Task<List<Users>> GetAllAsync();
     }
 }

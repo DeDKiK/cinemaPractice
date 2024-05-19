@@ -9,6 +9,8 @@ using api.Dtos.Session;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Interfaces;
+using api.Repository;
 
 namespace api.Controllers
 {
@@ -17,15 +19,17 @@ namespace api.Controllers
     public class SessionController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
+        private readonly ISessionRepository _sessRepo;
 
-        public SessionController(ApplicationDBContext context)
+        public SessionController(ApplicationDBContext context, ISessionRepository sessRepo)
         {
+            _sessRepo = sessRepo;
             _context = context;
         }
         [HttpGet]
         public async Task <IActionResult> GetAll()
         {
-            var session = await _context.Session.ToListAsync();
+            var session = await _sessRepo.GetAllAsync();
             var SessionDto = session.Select(s => s.ToSessionDto());
 
             return Ok(session);
