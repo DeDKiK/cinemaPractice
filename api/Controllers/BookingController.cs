@@ -9,6 +9,7 @@ using api.Dtos.Booking;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Interfaces;
 
 namespace api.Controllers
 {
@@ -17,15 +18,18 @@ namespace api.Controllers
     public class BookingController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public BookingController(ApplicationDBContext context)
+
+        private readonly IBookingRepository _bookRepo;
+        public BookingController(ApplicationDBContext context, IBookingRepository bookRepo)
         {
+            _bookRepo = bookRepo;
             _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var booking = await _context.Booking.ToListAsync();
+            var booking = await _bookRepo.GetAllAsync();
             var BookingDto = booking.Select(s => s.ToBookingDto());
 
             return Ok(booking);
