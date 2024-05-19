@@ -17,15 +17,17 @@ namespace api.Controllers
     public class BookingController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public BookingController(ApplicationDBContext context)
+        private readonly IBookingRepository BookRepo;
+        public BookingController(ApplicationDBContext context, IBookingRepository BookRepo)
         {
+            _BookRepo = BookRepo;
             _context = context;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var booking = _context.Booking.ToList()
+            var booking = BookRepo.GetAllAsync();
             .Select(s => s.ToBookingDto());
 
             return Ok(booking);
@@ -58,6 +60,19 @@ namespace api.Controllers
 public IActionResult Delete([FromRoute] int id)
 {
     var BookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
+    if (BookingModel == null)
+    {
+        return NotFound();
+    }
+    _context.Booking.Remove(BookingModel);
+    _context.SaveChanges();
+
+    return NoContent();
+}
+    [HttpDelete("{id}")]
+public IActionResult Delete([FromRoute] int id)
+{
+    varBookingModel = _context.Booking.FirstOrDefault(x => x.Booking_Id == id);
     if (BookingModel == null)
     {
         return NotFound();
