@@ -18,7 +18,7 @@ namespace api.Repository
 
     public BookingRepository(ApplicationDBContext context)
     {
-        context = _context;
+        _context = context;
     }
 
         public async Task<Booking> CreateAsync(Booking bookingModel)
