@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Markup;
 using System.Runtime.CompilerServices;
+using api.Interfaces;
 
 
 namespace api.Controllers
@@ -20,17 +21,19 @@ namespace api.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public FilmsController(ApplicationDBContext context)
+        private readonly IFilmsRepository _filmsRepo;
+        public FilmsController(ApplicationDBContext context, IFilmsRepository filmsRepo)
         {
+            _filmsRepo = filmsRepo;
             _context = context;
         }
 
         [HttpGet]
         public async Task <IActionResult> GetAll()
         {
-            var films = await _context.Films.ToListAsync();
-           
-           var FilmsDTO = films.Select(s => s.ToFilmsDto());
+            var films = await _filmsRepo.GetAllAsync();
+       
+            var FilmsDTO = films.Select(s => s.ToFilmsDto());
 
             return Ok(films);
         }
@@ -38,7 +41,7 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public async Task <IActionResult> GetById([FromRoute] int id)
         {
-            var films = await _context.Films.FindAsync(id);
+            var films = await _filmsRepo.GetByIdAsync(id);
 
             if(films == null)
             {
@@ -53,8 +56,7 @@ namespace api.Controllers
         public async Task <IActionResult> Create([FromBody] CreateFilmsRequestDto FilmsDTO)
         {
             var filmsModel = FilmsDTO.ToFilmsFromCreateDto();
-            await _context.Films.AddAsync(filmsModel);
-            await _context.SaveChangesAsync();
+            await _filmsRepo.CreateAsync(filmsModel);
 
             return CreatedAtAction(nameof(GetById), new { id = filmsModel.Id_films}, filmsModel.ToFilmsDto());
         }
@@ -63,7 +65,7 @@ namespace api.Controllers
         [Route("{id}")]     
         public async Task <IActionResult> Update([FromRoute] int id, [FromBody] UpdateFilmsRequestDto updateDto)
         { 
-            var filmsModel = await _context.Films.FirstOrDefaultAsync(x => x.Id_films == id);
+            var filmsModel = await _filmsRepo.UpdateAsync(id, updateDto);
             
             
             if(filmsModel == null)
@@ -72,31 +74,18 @@ namespace api.Controllers
                     return NotFound();
                 }
 
-            filmsModel.Name = updateDto.Name;
-            filmsModel.Genre = updateDto.Genre;
-            filmsModel.Producer = updateDto.Producer;
-            filmsModel.Description = updateDto.Description;
-            filmsModel.Duration = updateDto.Duration;
-            filmsModel.Release_Date = updateDto.Release_Date;
-            filmsModel.Country = updateDto.Country;
-            filmsModel.Age_rating = updateDto.Age_rating;
-
-            await _context.SaveChangesAsync();
 
             return Ok(filmsModel.ToFilmsDto());
 
         }
-    [HttpDelete("{id}")]
+[HttpDelete("{id}")]
 public async Task <IActionResult> Delete([FromRoute] int id)
 {
-    var FilmsModel = await _context.Films.FirstOrDefaultAsync(x => x.Id_films == id);
+    var FilmsModel = await _filmsRepo.DeleteAsync(id);
     if (FilmsModel == null)
     {
         return NotFound();
     }
-    _context.Films.Remove(FilmsModel);
-    
-    await _context.SaveChangesAsync();
 
     return NoContent();
 }
