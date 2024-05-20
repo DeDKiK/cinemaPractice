@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Films;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +40,16 @@ namespace api.Repository
             return filmsModel;
         }
 
-        public async Task<List<Films>> GetAllAsync()
+        public async Task<List<Films>> GetAllAsync(QueryObject query)
         {
-            return await _context.Films.ToListAsync();
+            var films = _context.Films.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.Genre))
+            {
+
+            films = films.Where(s => s.Genre.Contains(query.Genre));
+            }
+            return await films.ToListAsync();
         }
 
         public async Task<Films?> GetByIdAsync(int id)
