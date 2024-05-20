@@ -13,6 +13,7 @@ using System.Windows.Markup;
 using System.Runtime.CompilerServices;
 using api.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -29,9 +30,9 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> GetAll()
+        public async Task <IActionResult> GetAll([FromQuery]QueryObject query)
         {
-            var films = await _filmsRepo.GetAllAsync();
+            var films = await _filmsRepo.GetAllAsync(query);
        
             var FilmsDTO = films.Select(s => s.ToFilmsDto());
 
