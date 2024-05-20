@@ -49,7 +49,17 @@ namespace api.Repository
 
             films = films.Where(s => s.Genre.Contains(query.Genre));
             }
+
+            if(!string.IsNullOrWhiteSpace(query.SortBy))
+            {
+                if(query.SortBy.Equals("Genre", StringComparison.OrdinalIgnoreCase))
+                {
+                    films = query.IsDecsending ? films.OrderByDescending(s => s.Genre) : films.OrderBy(s => s.Genre);
+                }
+            }
             return await films.ToListAsync();
+
+
         }
 
         public async Task<Films?> GetByIdAsync(int id)
